@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fractions, Decimals & Percentages - Interactive Quiz</title>
+    <!-- Tailwind CSS for modern styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- MathJax for rendering nicely formatted mathematical fractions -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom scrollbar for question palette */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+
+    <!-- Header / Navbar -->
+    <header class="bg-indigo-700 text-white shadow-md py-4 px-6 sticky top-0 z-30">
+        <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="bg-indigo-600 p-2.5 rounded-xl border border-indigo-500 shadow-inner">
+                    <i class="fa-solid fa-calculator text-2xl text-amber-300"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold tracking-tight">Math Mastery Quiz</h1>
+                    <p class="text-xs text-indigo-200">Fractions, Decimals & Percentages (45 Questions)</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-4 text-sm font-medium">
+                <div class="bg-indigo-800/80 px-3.5 py-1.5 rounded-lg border border-indigo-600 flex items-center space-x-2">
+                    <i class="fa-solid fa-floppy-disk text-emerald-400"></i>
+                    <span id="save-status" class="text-xs text-indigo-100">Auto-saved to device</span>
+                </div>
+                <!-- Toggle Navigation Sidebar Button -->
+                <button onclick="toggleSidebar()" id="toggle-nav-btn" class="bg-indigo-600 hover:bg-indigo-500 text-white px-3 py-1.5 rounded-lg text-xs transition duration-150 flex items-center space-x-1.5 border border-indigo-400">
+                    <i class="fa-solid fa-bars-staggered" id="toggle-nav-icon"></i>
+                    <span id="toggle-nav-text">Hide Nav</span>
+                </button>
+                <button onclick="resetQuizProgress()" class="bg-rose-600/90 hover:bg-rose-600 text-white px-3 py-1.5 rounded-lg text-xs transition duration-150 flex items-center space-x-1">
+                    <i class="fa-solid fa-rotate-right"></i>
+                    <span>Reset Progress</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main App Container -->
+    <main class="max-w-7xl mx-auto w-full flex-grow p-4 md:p-6 grid grid-cols-1 lg:grid-cols-4 gap-6 relative transition-all duration-300">
+
+        <!-- Sidebar / Question Navigation Grid -->
+        <aside id="sidebar-nav" class="lg:col-span-1 bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-col h-full max-h-[85vh] transition-all duration-300">
+            <div class="mb-4">
+                <h2 class="font-bold text-slate-700 text-base mb-1">Quiz Progress</h2>
+                <div class="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden">
+                    <div id="overall-progress-bar" class="bg-indigo-600 h-full w-0 transition-all duration-300"></div>
+                </div>
+                <div class="flex justify-between text-xs text-slate-500 mt-1 font-medium">
+                    <span id="answered-count">0 / 45 Answered</span>
+                    <span id="progress-percentage">0%</span>
+                </div>
+            </div>
+
+            <!-- Difficulty Tabs -->
+            <div class="flex bg-slate-100 p-1 rounded-xl mb-4 text-xs font-semibold">
+                <button onclick="filterDifficulty('easy')" id="tab-easy" class="flex-1 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition">Easy</button>
+                <button onclick="filterDifficulty('medium')" id="tab-medium" class="flex-1 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition">Medium</button>
+                <button onclick="filterDifficulty('hots')" id="tab-hots" class="flex-1 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition">HOTS</button>
+                <button onclick="filterDifficulty('all')" id="tab-all" class="flex-1 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition bg-white shadow-xs text-indigo-600">All</button>
+            </div>
+
+            <!-- Question Grid Buttons -->
+            <div class="flex-grow overflow-y-auto custom-scrollbar pr-1">
+                <div id="question-palette" class="grid grid-cols-5 gap-2">
+                    <!-- Dynamic rendering of grid items -->
+                </div>
+            </div>
+
+            <!-- Legend -->
+            <div class="mt-4 pt-3 border-t border-slate-100 grid grid-cols-2 gap-2 text-xs text-slate-600">
+                <div class="flex items-center space-x-2">
+                    <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+                    <span>Correct</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <span class="w-3 h-3 rounded-full bg-rose-500"></span>
+                    <span>Incorrect</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <span class="w-3 h-3 rounded-full bg-slate-200 border border-slate-300"></span>
+                    <span>Unanswered</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <span class="w-3 h-3 rounded-full bg-indigo-600"></span>
+                    <span>Current</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Question Display & Interactive Zone -->
+        <section id="main-content" class="lg:col-span-3 flex flex-col transition-all duration-300">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8 flex-grow flex flex-col justify-between">
+                
+                <div>
+                    <!-- Header of Question Card -->
+                    <div class="flex justify-between items-center mb-6 pb-4 border-b border-slate-100">
+                        <div class="flex items-center space-x-3">
+                            <span id="question-number-badge" class="bg-indigo-100 text-indigo-800 text-sm font-bold px-3 py-1 rounded-lg">
+                                Question 1
+                            </span>
+                            <span id="difficulty-badge" class="text-xs font-semibold px-2.5 py-1 rounded-md uppercase tracking-wider bg-emerald-100 text-emerald-800">
+                                Easy
+                            </span>
+                        </div>
+                        <div class="text-xs font-medium text-slate-400">
+                            Topic: <span id="topic-label" class="text-slate-600 font-semibold">Basic Quantities</span>
+                        </div>
+                    </div>
+
+                    <!-- Question Content Area -->
+                    <div class="space-y-6">
+                        <div id="question-text" class="text-lg md:text-xl text-slate-800 font-medium leading-relaxed">
+                            <!-- Question rendered here -->
+                        </div>
+
+                        <!-- Visual Area (Diagrams if applicable) -->
+                        <div id="visual-container" class="hidden my-4 p-4 bg-indigo-50/50 rounded-xl border border-indigo-100 flex justify-center items-center">
+                            <!-- Interactive SVG Grid or Graphic -->
+                        </div>
+
+                        <!-- User Answer Form -->
+                        <div class="pt-2">
+                            <label for="user-input" class="block text-sm font-semibold text-slate-700 mb-2">
+                                Your Short Answer / Essay Solution:
+                            </label>
+                            <div class="relative">
+                                <input type="text" id="user-input" placeholder="Type your answer (e.g. 1/2, 20, 15kg, 3.5)..." 
+                                    class="w-full px-4 py-3.5 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:bg-white text-base transition duration-150 outline-none"
+                                    onkeypress="handleKeyPress(event)">
+                                <button onclick="checkAnswer()" id="submit-btn" class="absolute right-2 top-2 bottom-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-5 rounded-lg transition duration-150 shadow-sm flex items-center space-x-1 text-sm">
+                                    <span>Check</span>
+                                    <i class="fa-solid fa-arrow-right text-xs"></i>
+                                </button>
+                            </div>
+                            <p class="text-xs text-slate-400 mt-2">Press <kbd class="px-1.5 py-0.5 bg-slate-100 border border-slate-300 rounded text-slate-600">Enter</kbd> to submit your answer instantly.</p>
+                        </div>
+
+                        <!-- Immediate Feedback Box -->
+                        <div id="feedback-box" class="hidden p-4 rounded-xl border transition-all duration-300">
+                            <div class="flex items-start space-x-3">
+                                <div id="feedback-icon" class="text-2xl mt-0.5"></div>
+                                <div class="flex-grow">
+                                    <h4 id="feedback-title" class="font-bold text-base"></h4>
+                                    <p id="feedback-message" class="text-sm mt-1 leading-relaxed"></p>
+                                    <div id="explanation-box" class="mt-3 pt-3 border-t text-xs font-mono space-y-1"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation Controls -->
+                <div class="flex justify-between items-center mt-8 pt-6 border-t border-slate-100">
+                    <button onclick="navigateQuestion(-1)" id="prev-btn" class="px-5 py-2.5 rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-50 font-semibold text-sm transition duration-150 flex items-center space-x-2">
+                        <i class="fa-solid fa-chevron-left text-xs"></i>
+                        <span>Previous</span>
+                    </button>
+
+                    <div class="text-xs text-slate-400 hidden sm:block">
+                        Auto-saves progress on submission
+                    </div>
+
+                    <button onclick="navigateQuestion(1)" id="next-btn" class="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm transition duration-150 flex items-center space-x-2">
+                        <span>Next</span>
+                        <i class="fa-solid fa-chevron-right text-xs"></i>
+                    </button>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- Quiz Completion Summary Modal -->
+    <div id="summary-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-6 md:p-8 shadow-2xl border border-slate-100 transform transition-all">
+            <div class="text-center">
+                <div class="w-16 h-16 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center text-3xl mx-auto mb-4">
+                    <i class="fa-solid fa-trophy"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-slate-800">Quiz Completed!</h3>
+                <p class="text-slate-500 text-sm mt-1">Here is how you performed across all 45 questions.</p>
+            </div>
+
+            <div class="grid grid-cols-3 gap-3 my-6 text-center">
+                <div class="bg-slate-50 p-3 rounded-xl border border-slate-100">
+                    <div class="text-xs text-slate-500 font-semibold">Total Score</div>
+                    <div id="final-score" class="text-2xl font-extrabold text-indigo-600 mt-1">0%</div>
+                </div>
+                <div class="bg-emerald-50 p-3 rounded-xl border border-emerald-100">
+                    <div class="text-xs text-emerald-600 font-semibold">Correct</div>
+                    <div id="final-correct" class="text-2xl font-extrabold text-emerald-600 mt-1">0</div>
+                </div>
+                <div class="bg-rose-50 p-3 rounded-xl border border-rose-100">
+                    <div class="text-xs text-rose-600 font-semibold">Incorrect</div>
+                    <div id="final-incorrect" class="text-2xl font-extrabold text-rose-600 mt-1">0</div>
+                </div>
+            </div>
+
+            <div class="space-y-3">
+                <button onclick="closeSummaryModal()" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-md transition">
+                    Review Answers
+                </button>
+                <button onclick="resetQuizProgress()" class="w-full py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl text-sm transition">
+                    Restart Quiz
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /**
+         * 45 Comprehensive Math Questions based directly on textbook Exercise 5.2S & Chapter 10
+         * Easy: 15 questions
+         * Medium: 15 questions
+         * HOTS: 15 questions
+         */
+        const quizData = [
+            // --- EASY (15 Questions) ---
+            {
+                id: 1,
+                difficulty: 'easy',
+                topic: 'Mental Fractions',
+                question: 'Calculate: \\(\\frac{1}{2}\\) of 40 sheep',
+                correctAnswers: ['20', '20 sheep'],
+                explanation: '1/2 of 40 = 40 ÷ 2 = 20 sheep.',
+                visual: null
+            },
+            {
+                id: 2,
+                difficulty: 'easy',
+                topic: 'Mental Fractions',
+                question: 'Calculate: \\(\\frac{1}{3}\\) of 15 apples',
+                correctAnswers: ['5', '5 apples'],
+                explanation: '1/3 of 15 = 15 ÷ 3 = 5 apples.',
+                visual: null
+            },
+            {
+                id: 3,
+                difficulty: 'easy',
+                topic: 'Mental Fractions',
+                question: 'Calculate: \\(\\frac{1}{5}\\) of 25 shops',
+                correctAnswers: ['5', '5 shops'],
+                explanation: '1/5 of 25 = 25 ÷ 5 = 5 shops.',
+                visual: null
+            },
+            {
+                id: 4,
+                difficulty: 'easy',
+                topic: 'Mental Fractions',
+                question: 'Calculate: \\(\\frac{1}{4}\\) of 48 marks',
+                correctAnswers: ['12', '12 marks'],
+                explanation: '1/4 of 48 = 48 ÷ 4 = 12 marks.',
+                visual: null
+            },
+            {
+                id: 5,
+                difficulty: 'easy',
+                topic: 'Multiplying Fractions',
+                question: 'Calculate and simplify: \\(5 \\times \\frac{1}{2}\\) (Write as mixed number or improper fraction)',
+                correctAnswers: ['5/2', '2 1/2', '2.5'],
+                explanation: '5 × 1/2 = 5/2 or 2 1/2.',
+                visual: null
+            },
+            {
+                id: 6,
+                difficulty: 'easy',
+                topic: 'Multiplying Fractions',
+                question: 'Calculate and simplify: \\(8 \\times \\frac{1}{4}\\)',
+                correctAnswers: ['2'],
+                explanation: '8 × 1/4 = 8/4 = 2.',
+                visual: null
+            },
+            {
+                id: 7,
+                difficulty: 'easy',
+                topic: 'Simple Percentages',
+                question: 'Calculate 50% of £60',
+                correctAnswers: ['30', '£30', '30 pounds'],
+                explanation: '50% is half of the amount. 60 ÷ 2 = £30.',
+                visual: null
+            },
+            {
+                id: 8,
+                difficulty: 'easy',
+                topic: 'Simple Percentages',
+                question: 'Calculate 10% of 40',
+                correctAnswers: ['4'],
+                explanation: '10% means divide by 10. 40 ÷ 10 = 4.',
+                visual: null
+            },
+            {
+                id: 9,
+                difficulty: 'easy',
+                topic: 'Simple Percentages',
+                question: 'Calculate 1% of £700',
+                correctAnswers: ['7', '£7', '7 pounds'],
+                explanation: '1% means divide by 100. 700 ÷ 100 = £7.',
+                visual: null
+            },
+            {
+                id: 10,
+                difficulty: 'easy',
+                topic: 'Shaded Fractions',
+                question: 'A rectangle is divided into 10 equal squares and 4 of them are shaded. Write the fraction of the shaded shape in its simplest form.',
+                correctAnswers: ['2/5', '4/10'],
+                explanation: 'Shaded fraction is 4/10, which simplifies to 2/5.',
+                visual: 'grid_4_10'
+            },
+            {
+                id: 11,
+                difficulty: 'easy',
+                topic: 'Percentages of Quantities',
+                question: 'Calculate 50% of 12 kg',
+                correctAnswers: ['6', '6kg', '6 kg'],
+                explanation: '50% of 12 kg = 12 ÷ 2 = 6 kg.',
+                visual: null
+            },
+            {
+                id: 12,
+                difficulty: 'easy',
+                topic: 'Percentages of Quantities',
+                question: 'Calculate 10% of 370 p',
+                correctAnswers: ['37', '37p', '37 p'],
+                explanation: '10% of 370 p = 370 ÷ 10 = 37 p.',
+                visual: null
+            },
+            {
+                id: 13,
+                difficulty: 'easy',
+                topic: 'Multiplying Fractions',
+                question: 'Calculate: \\(\\frac{1}{12} \\times 24\\)',
+                correctAnswers: ['2'],
+                explanation: '24 ÷ 12 = 2.',
+                visual: null
+            },
+            {
+                id: 14,
+                difficulty: 'easy',
+                topic: 'Simple Percentages',
+                question: 'Calculate 25% of £300',
+                correctAnswers: ['75', '£75', '75 pounds'],
+                explanation: '25% is 1/4 of the amount. 300 ÷ 4 = £75.',
+                visual: null
+            },
+            {
+                id: 15,
+                difficulty: 'easy',
+                topic: 'Simple Percentages',
+                question: 'Calculate 20% of 210 km',
+                correctAnswers: ['42', '42km', '42 km'],
+                explanation: '10% of 210 = 21. 20% = 21 × 2 = 42 km.',
+                visual: null
+            },
+
+            // --- MEDIUM (15 Questions) ---
+            {
+                id: 16,
+                difficulty: 'medium',
+                topic: 'Multiplying Fractions',
+                question: 'Calculate and leave your answer in its simplest form: \\(6 \\times \\frac{2}{3}\\)',
+                correctAnswers: ['4'],
+                explanation: '(6 × 2) / 3 = 12 / 3 = 4.',
+                visual: null
+            },
+            {
+                id: 17,
+                difficulty: 'medium',
+                topic: 'Multiplying Fractions',
+                question: 'Calculate and leave your answer in its simplest form: \\(5 \\times \\frac{3}{4}\\) (Write as mixed fraction)',
+                correctAnswers: ['3 3/4', '15/4', '3.75'],
+                explanation: '5 × 3/4 = 15/4 = 3 3/4.',
+                visual: null
+            },
+            {
+                id: 18,
+                difficulty: 'medium',
+                topic: 'Fraction of Amounts',
+                question: 'Calculate: \\(\\frac{3}{10}\\) of £40',
+                correctAnswers: ['12', '£12', '12 pounds'],
+                explanation: '1/10 of 40 = 4. 3/10 = 4 × 3 = £12.',
+                visual: null
+            },
+            {
+                id: 19,
+                difficulty: 'medium',
+                topic: 'Fraction of Amounts',
+                question: 'Calculate: \\(\\frac{2}{5}\\) of £70',
+                correctAnswers: ['28', '£28', '28 pounds'],
+                explanation: '1/5 of 70 = 14. 2/5 = 14 × 2 = £28.',
+                visual: null
+            },
+            {
+                id: 20,
+                difficulty: 'medium',
+                topic: 'Fraction of Amounts',
+                question: 'Calculate: \\(\\frac{3}{4}\\) of 50 m',
+                correctAnswers: ['37.5', '37.5m', '37.5 m', '37 1/2'],
+                explanation: '50 ÷ 4 = 12.5. 12.5 × 3 = 37.5 m.',
+                visual: null
+            },
+            {
+                id: 21,
+                difficulty: 'medium',
+                topic: 'Fraction of Amounts',
+                question: 'Calculate: \\(\\frac{3}{8}\\) of £1000',
+                correctAnswers: ['375', '£375', '375 pounds'],
+                explanation: '1000 ÷ 8 = 125. 125 × 3 = £375.',
+                visual: null
+            },
+            {
+                id: 22,
+                difficulty: 'medium',
+                topic: 'Percentages of Quantities',
+                question: 'Calculate 11% of £18 (Leave exact decimal value)',
+                correctAnswers: ['1.98', '£1.98', '1.98 pounds'],
+                explanation: '11% of 18 = 0.11 × 18 = £1.98.',
+                visual: null
+            },
+            {
+                id: 23,
+                difficulty: 'medium',
+                topic: 'Percentages of Quantities',
+                question: 'Calculate 60% of 73',
+                correctAnswers: ['43.8'],
+                explanation: '10% of 73 = 7.3. 60% = 7.3 × 6 = 43.8.',
+                visual: null
+            },
+            {
+                id: 24,
+                difficulty: 'medium',
+                topic: 'Percentages of Quantities',
+                question: 'Calculate 75% of 48 m',
+                correctAnswers: ['36', '36m', '36 m'],
+                explanation: '75% = 3/4. 48 ÷ 4 × 3 = 36 m.',
+                visual: null
+            },
+            {
+                id: 25,
+                difficulty: 'medium',
+                topic: 'Percentages of Quantities',
+                question: 'Calculate 17% of 65 m',
+                correctAnswers: ['11.05', '11.05m', '11.05 m'],
+                explanation: '17% of 65 = 0.17 × 65 = 11.05 m.',
+                visual: null
+            },
+            {
+                id: 26,
+                difficulty: 'medium',
+                topic: 'Shaded Grid Percentage',
+                question: 'A grid of 10 squares currently has 4 squares shaded (40%). How many MORE squares must be shaded so that exactly 70% of the shape is shaded?',
+                correctAnswers: ['3', '3 squares', '3 more'],
+                explanation: '70% of 10 = 7 squares. Currently 4 are shaded, so 7 - 4 = 3 more squares need to be shaded.',
+                visual: 'grid_4_10'
+            },
+            {
+                id: 27,
+                difficulty: 'medium',
+                topic: 'Fraction of Amounts',
+                question: 'Calculate: \\(\\frac{4}{7}\\) of 64 km (Round to 2 decimal places if needed)',
+                correctAnswers: ['36.57', '36.57km', '36.57 km'],
+                explanation: '(64 × 4) / 7 = 256 / 7 = 36.57 km.',
+                visual: null
+            },
+            {
+                id: 28,
+                difficulty: 'medium',
+                topic: 'Fraction of Amounts',
+                question: 'Calculate: \\(\\frac{11}{12}\\) of 1500 m',
+                correctAnswers: ['1375', '1375m', '1375 m'],
+                explanation: '1500 ÷ 12 = 125. 125 × 11 = 1375 m.',
+                visual: null
+            },
+            {
+                id: 29,
+                difficulty: 'medium',
+                topic: 'Percentages of Quantities',
+                question: 'Calculate 85% of 148 m',
+                correctAnswers: ['125.8', '125.8m', '125.8 m'],
+                explanation: '0.85 × 148 = 125.8 m.',
+                visual: null
+            },
+            {
+                id: 30,
+                difficulty: 'medium',
+                topic: 'Fraction of Amounts',
+                question: 'Calculate: \\(\\frac{4}{15}\\) of 360°',
+                correctAnswers: ['96', '96°', '96 degrees'],
+                explanation: '360 ÷ 15 = 24. 24 × 4 = 96°.',
+                visual: null
+            },
+
+            // --- HOTS / APPLICATION (15 Questions) ---
+            {
+                id: 31,
+                difficulty: 'hots',
+                topic: 'Misconception Analysis',
+                question: 'Maurice says: "To find 10%, you divide by 10. So to find 20%, you just divide by 20." Is he correct? Answer "Yes" or "No" and state the correct division factor for 20%.',
+                correctAnswers: ['No, divide by 5', 'No, divide by 5.', 'No, 5', 'No'],
+                explanation: 'Maurice is wrong. 20% = 20/100 = 1/5, so to find 20%, you divide by 5 (or divide by 10 and multiply by 2).',
+                visual: null
+            },
+            {
+                id: 32,
+                difficulty: 'hots',
+                topic: 'Fraction of Amounts (Rounding)',
+                question: 'Calculate \\(\\frac{8}{15}\\) of 495 kg.',
+                correctAnswers: ['264', '264kg', '264 kg'],
+                explanation: '495 ÷ 15 = 33. 33 × 8 = 264 kg.',
+                visual: null
+            },
+            {
+                id: 33,
+                difficulty: 'hots',
+                topic: 'Fraction of Time',
+                question: 'Calculate \\(\\frac{13}{15}\\) of 1 hour in minutes.',
+                correctAnswers: ['52', '52 minutes', '52 mins', '52min'],
+                explanation: '1 hour = 60 minutes. (60 ÷ 15) × 13 = 4 × 13 = 52 minutes.',
+                visual: null
+            },
+            {
+                id: 34,
+                difficulty: 'hots',
+                topic: 'Fraction of Amounts',
+                question: 'Calculate \\(\\frac{13}{18}\\) of 30 tonnes. Express your answer as a mixed number (e.g., 21 2/3).',
+                correctAnswers: ['21 2/3', '65/3', '21.67'],
+                explanation: '(13 × 30) / 18 = 390 / 18 = 65 / 3 = 21 2/3 tonnes.',
+                visual: null
+            },
+            {
+                id: 35,
+                difficulty: 'hots',
+                topic: 'Percentage Word Problem',
+                question: 'A jacket original price is £80. It is discounted by 15%. What is the discount amount in pounds?',
+                correctAnswers: ['12', '£12', '12 pounds'],
+                explanation: '10% of £80 = £8. 5% of £80 = £4. 15% discount = £8 + £4 = £12.',
+                visual: null
+            },
+            {
+                id: 36,
+                difficulty: 'hots',
+                topic: 'Percentage Word Problem',
+                question: 'Continuing Q35: What is the FINAL sale price of the £80 jacket after the 15% discount?',
+                correctAnswers: ['68', '£68', '68 pounds'],
+                explanation: 'Final price = Original Price - Discount = £80 - £12 = £68.',
+                visual: null
+            },
+            {
+                id: 37,
+                difficulty: 'hots',
+                topic: 'Complex Fraction of Amount',
+                question: 'Calculate \\(\\frac{17}{15}\\) of £230. Give your answer to 2 decimal places.',
+                correctAnswers: ['260.67', '£260.67', '260.67 pounds'],
+                explanation: '(17 × 230) / 15 = 3910 / 15 = 260.666... ≈ £260.67.',
+                visual: null
+            },
+            {
+                id: 38,
+                difficulty: 'hots',
+                topic: 'Large Percentages',
+                question: 'A company\'s profits increased by 150% from last year\'s profit of $4,000. How much did the profit INCREASE by?',
+                correctAnswers: ['6000', '$6000', '6000 dollars', '$6,000'],
+                explanation: '150% of $4,000 = 1.5 × 4,000 = $6,000.',
+                visual: null
+            },
+            {
+                id: 39,
+                difficulty: 'hots',
+                topic: 'Reverse Percentage Thinking',
+                question: 'If 25% of a secret number is 45, what is 100% of the number?',
+                correctAnswers: ['180'],
+                explanation: 'If 1/4 of x = 45, then x = 45 × 4 = 180.',
+                visual: null
+            },
+            {
+                id: 40,
+                difficulty: 'hots',
+                topic: 'Fraction of Angles',
+                question: 'Calculate \\(\\frac{12}{31}\\) of 360°. Round your answer to 1 decimal place.',
+                correctAnswers: ['139.4', '139.4°', '139.4 degrees'],
+                explanation: '(12 × 360) / 31 = 4320 / 31 = 139.354... ≈ 139.4°.',
+                visual: null
+            },
+            {
+                id: 41,
+                difficulty: 'hots',
+                topic: 'Percentage Comparison',
+                question: 'Which is larger: 35% of 80 or 45% of 60? Write "35% of 80", "45% of 60", or "Equal".',
+                correctAnswers: ['35% of 80', '35% of 80 is larger'],
+                explanation: '35% of 80 = 28. 45% of 60 = 27. Therefore 35% of 80 (28) is larger.',
+                visual: null
+            },
+            {
+                id: 42,
+                difficulty: 'hots',
+                topic: 'Combined Operations',
+                question: 'Express the sum of \\(\\frac{1}{4}\\) of 60 and 20% of 90 as a single number.',
+                correctAnswers: ['33'],
+                explanation: '1/4 of 60 = 15. 20% of 90 = 18. Sum = 15 + 18 = 33.',
+                visual: null
+            },
+            {
+                id: 43,
+                difficulty: 'hots',
+                topic: 'Multi-Step Percentage',
+                question: 'Calculate 2% of £30',
+                correctAnswers: ['0.6', '£0.60', '£0.6', '0.60', '60p'],
+                explanation: '1% of £30 = £0.30. 2% = £0.30 × 2 = £0.60 (or 60p).',
+                visual: null
+            },
+            {
+                id: 44,
+                difficulty: 'hots',
+                topic: 'Fraction Conversion',
+                question: 'Calculate: \\(\\frac{22}{7}\\) of 120 cm. Round your answer to 1 decimal place.',
+                correctAnswers: ['377.1', '377.1cm', '377.1 cm'],
+                explanation: '(22 × 120) / 7 = 2640 / 7 = 377.142... ≈ 377.1 cm.',
+                visual: null
+            },
+            {
+                id: 45,
+                difficulty: 'hots',
+                topic: 'Conceptual Synthesis',
+                question: 'A student scored 18 out of 25 in a math exercise. What is this score as a percentage?',
+                correctAnswers: ['72%', '72'],
+                explanation: '(18 / 25) × 100% = 18 × 4 = 72%.',
+                visual: null
+            }
+        ];
+
+        // State Management
+        let userState = {
+            answers: {},
+            results: {},
+            submitted: {}
+        };
+        let currentQuestionIndex = 0;
+        let activeFilter = 'all';
+        let filteredIndices = [];
+        let isSidebarVisible = true;
+        
+        // Storage key
+        const STORAGE_KEY = 'math_quiz_progress_v1';
+
+        // Toggle Sidebar Function
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar-nav');
+            const mainContent = document.getElementById('main-content');
+            const navText = document.getElementById('toggle-nav-text');
+            const navIcon = document.getElementById('toggle-nav-icon');
+
+            isSidebarVisible = !isSidebarVisible;
+
+            if (isSidebarVisible) {
+                sidebar.classList.remove('hidden');
+                mainContent.classList.remove('lg:col-span-4');
+                mainContent.classList.add('lg:col-span-3');
+                navText.textContent = 'Hide Nav';
+                navIcon.className = 'fa-solid fa-bars-staggered';
+            } else {
+                sidebar.classList.add('hidden');
+                mainContent.classList.remove('lg:col-span-3');
+                mainContent.classList.add('lg:col-span-4');
+                navText.textContent = 'Show Nav';
+                navIcon.className = 'fa-solid fa-table-cells';
+            }
+        }
+
+        // Initialize App
+        window.onload = function() {
+            loadProgressFromStorage();
+            applyFilter('all');
+            renderQuestion(currentQuestionIndex);
+            updateOverallProgress();
+        };
+
+        // Load LocalStorage
+        function loadProgressFromStorage() {
+            try {
+                const saved = localStorage.getItem(STORAGE_KEY);
+                if (saved) {
+                    userState = JSON.parse(saved);
+                    showSaveNotification('Saved progress loaded!');
+                }
+            } catch (e) {
+                console.error("Failed to load local storage", e);
+            }
+        }
+
+        // Save LocalStorage
+        function saveProgressToStorage() {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(userState));
+                const statusEl = document.getElementById('save-status');
+                statusEl.textContent = 'Auto-saved just now';
+                setTimeout(() => {
+                    statusEl.textContent = 'Auto-saved to device';
+                }, 2000);
+            } catch (e) {
+                console.error("Failed to save local storage", e);
+            }
+        }
+
+        // Reset Quiz Progress
+        function resetQuizProgress() {
+            if (confirm("Are you sure you want to reset all your answers and progress?")) {
+                localStorage.removeItem(STORAGE_KEY);
+                userState = { answers: {}, results: {}, submitted: {} };
+                currentQuestionIndex = 0;
+                applyFilter('all');
+                renderQuestion(currentQuestionIndex);
+                updateOverallProgress();
+                closeSummaryModal();
+            }
+        }
+
+        // Filtering System
+        function filterDifficulty(diff) {
+            activeFilter = diff;
+            
+            // Update tab button styles
+            ['easy', 'medium', 'hots', 'all'].forEach(tab => {
+                const btn = document.getElementById(`tab-${tab}`);
+                if (tab === diff) {
+                    btn.className = "flex-1 py-1.5 rounded-lg text-indigo-600 bg-white shadow-xs font-bold transition";
+                } else {
+                    btn.className = "flex-1 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition font-semibold";
+                }
+            });
+
+            applyFilter(diff);
+            // Jump to first available question in filter
+            currentQuestionIndex = filteredIndices[0] || 0;
+            renderQuestion(currentQuestionIndex);
+        }
+
+        function applyFilter(diff) {
+            if (diff === 'all') {
+                filteredIndices = quizData.map((_, idx) => idx);
+            } else {
+                filteredIndices = quizData
+                    .map((q, idx) => q.difficulty === diff ? idx : -1)
+                    .filter(idx => idx !== -1);
+            }
+            renderPalette();
+        }
+
+        // Render Sidebar Question Palette
+        function renderPalette() {
+            const palette = document.getElementById('question-palette');
+            palette.innerHTML = '';
+
+            quizData.forEach((q, idx) => {
+                // If filtering applies, highlight non-filtered items as transparent or hide
+                const isFilteredIn = filteredIndices.includes(idx);
+                if (!isFilteredIn && activeFilter !== 'all') return;
+
+                const btn = document.createElement('button');
+                btn.textContent = q.id;
+                
+                let baseStyle = "w-full aspect-square rounded-xl text-xs font-bold transition flex items-center justify-center shadow-xs border ";
+                
+                const isSubmitted = userState.submitted[q.id];
+                const isCorrect = userState.results[q.id];
+                const isCurrent = idx === currentQuestionIndex;
+
+                if (isCurrent) {
+                    baseStyle += "ring-2 ring-indigo-600 ring-offset-2 ";
+                }
+
+                if (isSubmitted) {
+                    if (isCorrect) {
+                        baseStyle += "bg-emerald-500 text-white border-emerald-600";
+                    } else {
+                        baseStyle += "bg-rose-500 text-white border-rose-600";
+                    }
+                } else {
+                    baseStyle += "bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200";
+                }
+
+                btn.className = baseStyle;
+                btn.onclick = () => {
+                    currentQuestionIndex = idx;
+                    renderQuestion(idx);
+                };
+
+                palette.appendChild(btn);
+            });
+        }
+
+        // Render Single Question
+        function renderQuestion(index) {
+            const q = quizData[index];
+            if (!q) return;
+
+            // Update Metadata
+            document.getElementById('question-number-badge').textContent = `Question ${q.id} of 45`;
+            document.getElementById('topic-label').textContent = q.topic;
+
+            const diffBadge = document.getElementById('difficulty-badge');
+            diffBadge.textContent = q.difficulty;
+            if (q.difficulty === 'easy') {
+                diffBadge.className = "text-xs font-semibold px-2.5 py-1 rounded-md uppercase tracking-wider bg-emerald-100 text-emerald-800";
+            } else if (q.difficulty === 'medium') {
+                diffBadge.className = "text-xs font-semibold px-2.5 py-1 rounded-md uppercase tracking-wider bg-amber-100 text-amber-800";
+            } else {
+                diffBadge.className = "text-xs font-semibold px-2.5 py-1 rounded-md uppercase tracking-wider bg-purple-100 text-purple-800";
+            }
+
+            // Update Question Text & Math
+            const qTextEl = document.getElementById('question-text');
+            qTextEl.innerHTML = q.question;
+            if (window.MathJax) {
+                MathJax.typesetPromise([qTextEl]);
+            }
+
+            // Render Visuals if any
+            renderVisual(q.visual);
+
+            // Populate Input
+            const inputEl = document.getElementById('user-input');
+            inputEl.value = userState.answers[q.id] || '';
+
+            // Handle Submitted Feedback state
+            const feedbackBox = document.getElementById('feedback-box');
+            if (userState.submitted[q.id]) {
+                showFeedback(userState.results[q.id], q);
+            } else {
+                feedbackBox.classList.add('hidden');
+            }
+
+            // Update Buttons
+            document.getElementById('prev-btn').disabled = (index === 0);
+            document.getElementById('prev-btn').style.opacity = index === 0 ? "0.5" : "1";
+
+            const nextBtn = document.getElementById('next-btn');
+            if (index === quizData.length - 1) {
+                nextBtn.innerHTML = `<span>Finish Quiz</span> <i class="fa-solid fa-check text-xs"></i>`;
+            } else {
+                nextBtn.innerHTML = `<span>Next</span> <i class="fa-solid fa-chevron-right text-xs"></i>`;
+            }
+
+            renderPalette();
+        }
+
+        // Visual Renderer (For shaded fraction grids)
+        function renderVisual(visualType) {
+            const container = document.getElementById('visual-container');
+            if (!visualType) {
+                container.classList.add('hidden');
+                container.innerHTML = '';
+                return;
+            }
+
+            container.classList.remove('hidden');
+            if (visualType === 'grid_4_10') {
+                // Render 2x5 rectangle grid with 4 shaded squares
+                container.innerHTML = `
+                    <div class="text-center">
+                        <div class="inline-grid grid-cols-5 gap-1.5 p-2 bg-slate-800 rounded-xl border-2 border-slate-700 shadow-md">
+                            <div class="w-12 h-12 bg-emerald-400 rounded-md border border-emerald-300 flex items-center justify-center text-xs font-bold text-slate-800">Shaded</div>
+                            <div class="w-12 h-12 bg-emerald-400 rounded-md border border-emerald-300 flex items-center justify-center text-xs font-bold text-slate-800">Shaded</div>
+                            <div class="w-12 h-12 bg-slate-200 rounded-md border border-slate-300"></div>
+                            <div class="w-12 h-12 bg-slate-200 rounded-md border border-slate-300"></div>
+                            <div class="w-12 h-12 bg-slate-200 rounded-md border border-slate-300"></div>
+                            <div class="w-12 h-12 bg-emerald-400 rounded-md border border-emerald-300 flex items-center justify-center text-xs font-bold text-slate-800">Shaded</div>
+                            <div class="w-12 h-12 bg-emerald-400 rounded-md border border-emerald-300 flex items-center justify-center text-xs font-bold text-slate-800">Shaded</div>
+                            <div class="w-12 h-12 bg-slate-200 rounded-md border border-slate-300"></div>
+                            <div class="w-12 h-12 bg-slate-200 rounded-md border border-slate-300"></div>
+                            <div class="w-12 h-12 bg-slate-200 rounded-md border border-slate-300"></div>
+                        </div>
+                        <p class="text-xs text-slate-500 mt-2 italic">Figure: Grid with 10 equal sections (4 shaded in green)</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Answer Checking Logic
+        function checkAnswer() {
+            const q = quizData[currentQuestionIndex];
+            const inputEl = document.getElementById('user-input');
+            const rawVal = inputEl.value.trim();
+
+            if (!rawVal) return;
+
+            // Clean & Normalize User Input
+            const cleanVal = cleanInput(rawVal);
+            
+            // Validate against list of acceptable correct answers
+            const isCorrect = q.correctAnswers.some(ans => cleanInput(ans) === cleanVal);
+
+            // Update State
+            userState.answers[q.id] = rawVal;
+            userState.results[q.id] = isCorrect;
+            userState.submitted[q.id] = true;
+
+            // Save and render feedback
+            saveProgressToStorage();
+            showFeedback(isCorrect, q);
+            renderPalette();
+            updateOverallProgress();
+        }
+
+        // Clean user string for fuzzy mathematical matching
+        function cleanInput(str) {
+            return str
+                .toString()
+                .toLowerCase()
+                .replace(/\s+/g, '')        // remove all whitespace
+                .replace(/£|\$|€|kg|m|p|km|min|mins|minutes|degrees|°/g, '') // strip common unit symbols
+                .trim();
+        }
+
+        // Display Instant Feedback
+        function showFeedback(isCorrect, q) {
+            const box = document.getElementById('feedback-box');
+            const icon = document.getElementById('feedback-icon');
+            const title = document.getElementById('feedback-title');
+            const msg = document.getElementById('feedback-message');
+            const explanation = document.getElementById('explanation-box');
+
+            box.classList.remove('hidden', 'bg-emerald-50', 'border-emerald-200', 'text-emerald-900', 'bg-rose-50', 'border-rose-200', 'text-rose-900');
+
+            if (isCorrect) {
+                box.classList.add('bg-emerald-50', 'border-emerald-200', 'text-emerald-900');
+                icon.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-600"></i>`;
+                title.textContent = "Correct Answer!";
+                msg.textContent = "Great job! Your answer is mathematically accurate.";
+            } else {
+                box.classList.add('bg-rose-50', 'border-rose-200', 'text-rose-900');
+                icon.innerHTML = `<i class="fa-solid fa-circle-xmark text-rose-600"></i>`;
+                title.textContent = "Incorrect Answer";
+                msg.textContent = `Accepted answers include: ${q.correctAnswers.join(' or ')}`;
+            }
+
+            explanation.innerHTML = `<strong>Step-by-step Solution:</strong> ${q.explanation}`;
+            if (window.MathJax) {
+                MathJax.typesetPromise([explanation]);
+            }
+        }
+
+        // Key Press Listener (Enter key to submit)
+        function handleKeyPress(e) {
+            if (e.key === 'Enter') {
+                checkAnswer();
+            }
+        }
+
+        // Question Navigation
+        function navigateQuestion(direction) {
+            const newIndex = currentQuestionIndex + direction;
+
+            if (newIndex >= 0 && newIndex < quizData.length) {
+                currentQuestionIndex = newIndex;
+                renderQuestion(currentQuestionIndex);
+            } else if (newIndex >= quizData.length) {
+                // Finished quiz
+                openSummaryModal();
+            }
+        }
+
+        // Progress Calculation
+        function updateOverallProgress() {
+            const total = quizData.length;
+            const answered = Object.keys(userState.submitted).length;
+            const percentage = Math.round((answered / total) * 100);
+
+            document.getElementById('answered-count').textContent = `${answered} / ${total} Answered`;
+            document.getElementById('progress-percentage').textContent = `${percentage}%`;
+            document.getElementById('overall-progress-bar').style.width = `${percentage}%`;
+        }
+
+        // Summary Modal Handling
+        function openSummaryModal() {
+            let correctCount = 0;
+            let totalSubmitted = 0;
+
+            quizData.forEach(q => {
+                if (userState.submitted[q.id]) {
+                    totalSubmitted++;
+                    if (userState.results[q.id]) correctCount++;
+                }
+            });
+
+            const scorePercent = totalSubmitted > 0 ? Math.round((correctCount / quizData.length) * 100) : 0;
+
+            document.getElementById('final-score').textContent = `${scorePercent}%`;
+            document.getElementById('final-correct').textContent = correctCount;
+            document.getElementById('final-incorrect').textContent = quizData.length - correctCount;
+
+            document.getElementById('summary-modal').classList.remove('hidden');
+        }
+
+        function closeSummaryModal() {
+            document.getElementById('summary-modal').classList.add('hidden');
+        }
+
+        function showSaveNotification(msg) {
+            const statusEl = document.getElementById('save-status');
+            statusEl.textContent = msg;
+            setTimeout(() => {
+                statusEl.textContent = 'Auto-saved to device';
+            }, 2500);
+        }
+    </script>
+</body>
+</html>
