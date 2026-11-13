@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cambridge Stage 7: Percentages Interactive Module</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & Plus Jakarta Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        cambridge: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            900: '#1e3a8a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-cambridge-600 selection:text-white">
+
+    <!-- Top Navigation Bar -->
+    <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-cambridge-600 text-white p-2 rounded-xl shadow-sm">
+                        <i class="fa-solid fa-percent text-lg"></i>
+                    </div>
+                    <div>
+                        <span class="font-bold text-slate-900 text-base sm:text-lg block leading-none">Cambridge Stage 7</span>
+                        <span class="text-xs text-slate-500 font-medium">Mathematics • Number Strand</span>
+                    </div>
+                </div>
+                
+                <!-- Desktop Nav Links -->
+                <div class="hidden md:flex space-x-1 bg-slate-100 p-1 rounded-xl">
+                    <a href="#objectives" class="px-3 py-1.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-white hover:text-cambridge-600 transition">1. Objectives</a>
+                    <a href="#warmup" class="px-3 py-1.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-white hover:text-cambridge-600 transition">2. Warm-Up</a>
+                    <a href="#applications" class="px-3 py-1.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-white hover:text-cambridge-600 transition">3. Applications</a>
+                    <a href="#concepts" class="px-3 py-1.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-white hover:text-cambridge-600 transition">4. Core Concepts</a>
+                    <a href="#practice" class="px-3 py-1.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-white hover:text-cambridge-600 transition">5. Worked Examples</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100 focus:outline-none">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-slate-200 px-4 pt-2 pb-4 space-y-1">
+            <a href="#objectives" class="block px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50">1. Learning Objectives</a>
+            <a href="#warmup" class="block px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50">2. Warm-Up Quiz (4 Questions)</a>
+            <a href="#applications" class="block px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50">3. Real-World Applications</a>
+            <a href="#concepts" class="block px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50">4. Core Concepts (Materi)</a>
+            <a href="#practice" class="block px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50">5. Worked Examples & Practice</a>
+        </div>
+    </nav>
+
+    <!-- Hero Header -->
+    <header class="bg-gradient-to-br from-cambridge-900 via-cambridge-700 to-indigo-800 text-white py-12 sm:py-16">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <span class="inline-block py-1 px-3 rounded-full bg-white/15 backdrop-blur-sm border border-white/20 text-xs sm:text-sm font-semibold tracking-wider uppercase mb-4">
+                Cambridge Lower Secondary Mathematics • Stage 7
+            </span>
+            <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight mb-4">
+                Understanding & Applying <span class="text-amber-300">Percentages</span>
+            </h1>
+            <p class="max-w-2xl mx-auto text-blue-100 text-base sm:text-lg leading-relaxed">
+                Modul interaktif untuk menguasai konsep <strong class="text-white">Fractions, Decimals, and Percentages (FDP)</strong>, menghitung persentase kuantitas, serta penerapannya dalam kehidupan sehari-hari.
+            </p>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16">
+
+        <!-- ===================================================================== -->
+        <!-- SECTION 1: LEARNING OBJECTIVES -->
+        <!-- ===================================================================== -->
+        <section id="objectives" class="scroll-mt-24">
+            <div class="flex items-center space-x-3 mb-6">
+                <span class="flex items-center justify-center w-9 h-9 rounded-xl bg-cambridge-600 text-white font-bold shadow">1</span>
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-900">Tujuan Pembelajaran <span class="text-cambridge-600 font-semibold">(Learning Objectives)</span></h2>
+                    <p class="text-sm text-slate-500">Target kompetensi yang harus dicapai pada Stage 7</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Objective Card 1 -->
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:border-cambridge-400 transition flex items-start space-x-4">
+                    <div class="p-3 bg-blue-50 text-cambridge-600 rounded-xl shrink-0">
+                        <i class="fa-solid fa-arrows-rotate text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-900 text-base">Equivalence & Conversion</h3>
+                        <p class="text-sm text-slate-600 mt-1">
+                            Mengenali dan mengubah bentuk yang setara (<span class="font-semibold text-slate-800">equivalent forms</span>) antara <span class="italic text-cambridge-700">fractions</span> (pecahan), <span class="italic text-cambridge-700">decimals</span> (desimal), dan <span class="italic text-cambridge-700">percentages</span> (persen).
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Objective Card 2 -->
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:border-cambridge-400 transition flex items-start space-x-4">
+                    <div class="p-3 bg-emerald-50 text-emerald-600 rounded-xl shrink-0">
+                        <i class="fa-solid fa-table-cells text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-900 text-base">Parts per Hundred & Special %</h3>
+                        <p class="text-sm text-slate-600 mt-1">
+                            Memahami persen sebagai <span class="font-semibold text-slate-800">"number of parts in every 100"</span>, termasuk persentase khusus <span class="italic text-emerald-700">less than 1%</span> (&lt;1%) dan <span class="italic text-emerald-700">greater than 100%</span> (&gt;100%).
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Objective Card 3 -->
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:border-cambridge-400 transition flex items-start space-x-4">
+                    <div class="p-3 bg-amber-50 text-amber-600 rounded-xl shrink-0">
+                        <i class="fa-solid fa-calculator text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-900 text-base">Percentages of Quantities</h3>
+                        <p class="text-sm text-slate-600 mt-1">
+                            Menghitung <span class="font-semibold text-slate-800">percentage of a quantity</span> (persentase dari suatu besaran) dan menyatakan satu kuantitas sebagai persentase dari kuantitas lainnya.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Objective Card 4 -->
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:border-cambridge-400 transition flex items-start space-x-4">
+                    <div class="p-3 bg-purple-50 text-purple-600 rounded-xl shrink-0">
+                        <i class="fa-solid fa-scale-balanced text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-900 text-base">Comparison & Real-World Context</h3>
+                        <p class="text-sm text-slate-600 mt-1">
+                            Menggunakan persentase untuk membandingkan data (<span class="italic text-purple-700">comparing quantities</span>) dalam konteks keuangan, statistika, peluang, dan geometri.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================================================================== -->
+        <!-- SECTION 2: WARM-UP (4 INTERACTIVE QUESTIONS) -->
+        <!-- ===================================================================== -->
+        <section id="warmup" class="scroll-mt-24">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                <div class="flex items-center space-x-3">
+                    <span class="flex items-center justify-center w-9 h-9 rounded-xl bg-amber-500 text-white font-bold shadow">2</span>
+                    <div>
+                        <h2 class="text-2xl font-bold text-slate-900">Warm-Up Activity <span class="text-amber-600 font-semibold">(4 Diagnostic Questions)</span></h2>
+                        <p class="text-sm text-slate-500">Uji pemahaman awalmu sebelum masuk ke materi inti (All questions in English)</p>
+                    </div>
+                </div>
+                <div id="warmup-score-badge" class="inline-flex items-center px-4 py-2 rounded-xl bg-slate-800 text-white text-sm font-semibold shadow-sm self-start">
+                    <i class="fa-solid fa-star text-amber-400 mr-2"></i> Score: <span id="warmup-score" class="ml-1">0</span> / 4
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="warmup-container">
+                <!-- Questions will be injected via JavaScript -->
+            </div>
+        </section>
+
+        <!-- ===================================================================== -->
+        <!-- SECTION 3: REAL-WORLD APPLICATIONS (INTERACTIVE TABS) -->
+        <!-- ===================================================================== -->
+        <section id="applications" class="scroll-mt-24">
+            <div class="flex items-center space-x-3 mb-6">
+                <span class="flex items-center justify-center w-9 h-9 rounded-xl bg-emerald-600 text-white font-bold shadow">3</span>
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-900">Penerapan Nyata <span class="text-emerald-600 font-semibold">(Real-World Applications)</span></h2>
+                    <p class="text-sm text-slate-500">Eksplorasi interaktif bagaimana persen digunakan dalam 4 bidang utama di Cambridge Stage 7</p>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                <!-- Application Tabs -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 border-b border-slate-200 bg-slate-50">
+                    <button onclick="switchAppTab('finance')" id="tab-finance" class="app-tab-btn active py-3.5 px-4 text-sm font-semibold text-cambridge-600 bg-white border-b-2 border-cambridge-600 flex items-center justify-center gap-2 transition">
+                        <i class="fa-solid fa-tags"></i> <span>1. Financial & Sales</span>
+                    </button>
+                    <button onclick="switchAppTab('data')" id="tab-data" class="app-tab-btn py-3.5 px-4 text-sm font-semibold text-slate-600 hover:text-slate-900 flex items-center justify-center gap-2 transition">
+                        <i class="fa-solid fa-chart-pie"></i> <span>2. Handling Data</span>
+                    </button>
+                    <button onclick="switchAppTab('prob')" id="tab-prob" class="app-tab-btn py-3.5 px-4 text-sm font-semibold text-slate-600 hover:text-slate-900 flex items-center justify-center gap-2 transition">
+                        <i class="fa-solid fa-dice"></i> <span>3. Probability</span>
+                    </button>
+                    <button onclick="switchAppTab('geom')" id="tab-geom" class="app-tab-btn py-3.5 px-4 text-sm font-semibold text-slate-600 hover:text-slate-900 flex items-center justify-center gap-2 transition">
+                        <i class="fa-solid fa-border-all"></i> <span>4. Geometry & Grid</span>
+                    </button>
+                </div>
+
+                <!-- Tab Content 1: Financial -->
+                <div id="content-finance" class="app-tab-content p-6 sm:p-8">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                        <div>
+                            <span class="px-2.5 py-1 bg-blue-100 text-cambridge-700 rounded-lg text-xs font-bold uppercase">Financial Contexts</span>
+                            <h3 class="text-xl font-bold text-slate-900 mt-2">Discounts, Tax, and Interest</h3>
+                            <p class="text-slate-600 text-sm mt-2 leading-relaxed">
+                                Dalam kehidupan sehari-hari, persen digunakan untuk menghitung potongan harga (<strong class="text-slate-800">sale discount</strong>), pajak pembelian (<strong class="text-slate-800">tax / VAT</strong>), atau bunga tabungan (<strong class="text-slate-800">simple interest</strong>).
+                            </p>
+                            <div class="mt-4 p-4 bg-amber-50 border border-amber-200 rounded-xl text-sm text-amber-900">
+                                <p class="font-bold flex items-center gap-2"><i class="fa-solid fa-lightbulb text-amber-500"></i> Thinking & Working Mathematically (TWM):</p>
+                                <p class="mt-1">Coba naikkan harga sebesar <strong>20%</strong>, lalu berikan diskon <strong>20%</strong>. Apakah harganya kembali ke harga awal? Gunakan simulator di samping untuk membuktikannya!</p>
+                            </div>
+                        </div>
+
+                        <!-- Interactive Discount/Markup Simulator -->
+                        <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-4">
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm font-semibold text-slate-700">Original Price (Harga Awal):</span>
+                                <span class="text-lg font-bold text-slate-900">$<span id="sim-orig-price">100</span></span>
+                            </div>
+                            <input type="range" id="sim-price-slider" min="50" max="500" step="10" value="100" class="w-full accent-cambridge-600 cursor-pointer">
+                            
+                            <div class="flex justify-between items-center pt-2">
+                                <span class="text-sm font-semibold text-slate-700">Percentage Change:</span>
+                                <span class="text-lg font-bold text-cambridge-600"><span id="sim-pct-val">-20</span>%</span>
+                            </div>
+                            <input type="range" id="sim-pct-slider" min="-50" max="50" step="5" value="-20" class="w-full accent-cambridge-600 cursor-pointer">
+
+                            <div class="pt-4 border-t border-slate-200 flex justify-between items-center">
+                                <div>
+                                    <span class="text-xs uppercase font-bold text-slate-500 block" id="sim-label">Discount Amount (Potongan)</span>
+                                    <span class="text-base font-bold text-rose-600" id="sim-diff">-$20.00</span>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-xs uppercase font-bold text-slate-500 block">Final Price (Harga Akhir)</span>
+                                    <span class="text-2xl font-extrabold text-emerald-600" id="sim-final">$80.00</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab Content 2: Handling Data -->
+                <div id="content-data" class="app-tab-content hidden p-6 sm:p-8">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                        <div>
+                            <span class="px-2.5 py-1 bg-emerald-100 text-emerald-700 rounded-lg text-xs font-bold uppercase">Handling Data & Statistics</span>
+                            <h3 class="text-xl font-bold text-slate-900 mt-2">Comparing Groups Using Percentages</h3>
+                            <p class="text-slate-600 text-sm mt-2 leading-relaxed">
+                                Mengapa kita membutuhkan persen dalam statistika? Karena dua kelompok sering kali memiliki jumlah total (<strong class="text-slate-800">total frequency</strong>) yang berbeda. Dengan mengubah data ke basis <strong class="text-slate-800">per 100</strong>, perbandingan menjadi adil (<strong class="text-slate-800">fair comparison</strong>).
+                            </p>
+                            <div class="mt-4 space-y-2 text-sm">
+                                <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                                    <strong class="text-slate-900">Class 7A:</strong> 18 out of 25 students passed the test &rarr; <span class="font-bold text-cambridge-600">72%</span>
+                                </div>
+                                <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                                    <strong class="text-slate-900">Class 7B:</strong> 21 out of 30 students passed the test &rarr; <span class="font-bold text-emerald-600">70%</span>
+                                </div>
+                                <p class="text-xs text-slate-500 pt-1">*Meskipun Class 7B memiliki jumlah siswa lulus lebih banyak (21 &gt; 18), secara proporsi Class 7A lebih unggul (72% &gt; 70%).</p>
+                            </div>
+                        </div>
+
+                        <!-- Visual Comparison Bar -->
+                        <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 space-y-5">
+                            <h4 class="font-bold text-slate-800 text-sm uppercase tracking-wider">Visual Comparison (100% Scale)</h4>
+                            <div>
+                                <div class="flex justify-between text-sm font-semibold mb-1">
+                                    <span>Class 7A (18 / 25)</span>
+                                    <span class="text-cambridge-600">72%</span>
+                                </div>
+                                <div class="w-full bg-slate-200 rounded-full h-5 overflow-hidden">
+                                    <div class="bg-cambridge-600 h-5 rounded-full transition-all duration-500" style="width: 72%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm font-semibold mb-1">
+                                    <span>Class 7B (21 / 30)</span>
+                                    <span class="text-emerald-600">70%</span>
+                                </div>
+                                <div class="w-full bg-slate-200 rounded-full h-5 overflow-hidden">
+                                    <div class="bg-emerald-500 h-5 rounded-full transition-all duration-500" style="width: 70%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab Content 3: Probability -->
+                <div id="content-prob" class="app-tab-content hidden p-6 sm:p-8">
+                    <div class="space-y-6">
+                        <div>
+                            <span class="px-2.5 py-1 bg-purple-100 text-purple-700 rounded-lg text-xs font-bold uppercase">Probability Scale</span>
+                            <h3 class="text-xl font-bold text-slate-900 mt-2">Expressing Likelihood in Percentages</h3>
+                            <p class="text-slate-600 text-sm mt-1">
+                                Peluang suatu kejadian (<strong class="text-slate-800">probability of an event</strong>) berada pada rentang <strong class="text-slate-800">0% (Impossible)</strong> hingga <strong class="text-slate-800">100% (Certain)</strong>.
+                            </p>
+                        </div>
+
+                        <!-- Probability Scale Bar -->
+                        <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200">
+                            <div class="relative pt-6 pb-2">
+                                <div class="h-4 rounded-full bg-gradient-to-r from-rose-500 via-amber-400 to-emerald-500"></div>
+                                <div class="grid grid-cols-5 text-center text-xs font-bold mt-3 text-slate-700">
+                                    <div>0%<br><span class="font-normal text-slate-500">Impossible</span></div>
+                                    <div>25%<br><span class="font-normal text-slate-500">Unlikely</span></div>
+                                    <div>50%<br><span class="font-normal text-slate-500">Even Chance</span></div>
+                                    <div>75%<br><span class="font-normal text-slate-500">Likely</span></div>
+                                    <div>100%<br><span class="font-normal text-slate-500">Certain</span></div>
+                                </div>
+                            </div>
+                            <div class="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+                                <div class="bg-white p-3 rounded-xl border border-slate-200">
+                                    <span class="font-bold text-rose-600">0% Chance:</span> Rolling a 7 on a standard 6-sided dice.
+                                </div>
+                                <div class="bg-white p-3 rounded-xl border border-slate-200">
+                                    <span class="font-bold text-amber-600">50% Chance:</span> Flipping a fair coin and getting Heads.
+                                </div>
+                                <div class="bg-white p-3 rounded-xl border border-slate-200">
+                                    <span class="font-bold text-emerald-600">80% Chance:</span> Picking a red marble from a bag of 8 red &amp; 2 blue marbles.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab Content 4: Geometry & Grid -->
+                <div id="content-geom" class="app-tab-content hidden p-6 sm:p-8">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                        <div>
+                            <span class="px-2.5 py-1 bg-amber-100 text-amber-700 rounded-lg text-xs font-bold uppercase">Geometry &amp; Waffle Diagram</span>
+                            <h3 class="text-xl font-bold text-slate-900 mt-2">Interactive 10&times;10 Hundred Square</h3>
+                            <p class="text-slate-600 text-sm mt-2 leading-relaxed">
+                                Klik kotak-kotak pada <strong class="text-slate-800">100-square grid</strong> di samping untuk mengarsir (<strong class="text-slate-800">shaded region</strong>). Lihat bagaimana persentase, pecahan paling sederhana (<strong class="text-slate-800">simplest fraction</strong>), dan desimal berubah secara otomatis!
+                            </p>
+                            <div class="mt-4 flex flex-wrap gap-2">
+                                <button onclick="setGridPreset(25)" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 rounded-lg text-xs font-semibold text-slate-700 transition">Preset: 25% (1/4)</button>
+                                <button onclick="setGridPreset(50)" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 rounded-lg text-xs font-semibold text-slate-700 transition">Preset: 50% (1/2)</button>
+                                <button onclick="setGridPreset(35)" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 rounded-lg text-xs font-semibold text-slate-700 transition">Preset: 35% (7/20)</button>
+                                <button onclick="setGridPreset(0)" class="px-3 py-1.5 bg-rose-50 hover:bg-rose-100 rounded-lg text-xs font-semibold text-rose-600 transition">Clear Grid</button>
+                            </div>
+
+                            <!-- Live FDP Readout -->
+                            <div class="grid grid-cols-3 gap-3 mt-5">
+                                <div class="bg-cambridge-50 border border-cambridge-200 p-3 rounded-xl text-center">
+                                    <span class="text-xs text-cambridge-700 font-semibold block">Percentage</span>
+                                    <span id="grid-pct" class="text-xl font-extrabold text-cambridge-900">25%</span>
+                                </div>
+                                <div class="bg-emerald-50 border border-emerald-200 p-3 rounded-xl text-center">
+                                    <span class="text-xs text-emerald-700 font-semibold block">Decimal</span>
+                                    <span id="grid-dec" class="text-xl font-extrabold text-emerald-900">0.25</span>
+                                </div>
+                                <div class="bg-purple-50 border border-purple-200 p-3 rounded-xl text-center">
+                                    <span class="text-xs text-purple-700 font-semibold block">Simplest Fraction</span>
+                                    <span id="grid-frac" class="text-xl font-extrabold text-purple-900">1/4</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 10x10 Grid Container -->
+                        <div class="flex justify-center">
+                            <div id="hundred-grid" class="grid grid-cols-10 gap-1 p-3 bg-slate-100 rounded-2xl border border-slate-300 w-full max-w-[300px] aspect-square">
+                                <!-- 100 cells generated by JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================================================================== -->
+        <!-- SECTION 4: CORE CONCEPTS (MATERI LENGKAP BILINGUAL) -->
+        <!-- ===================================================================== -->
+        <section id="concepts" class="scroll-mt-24">
+            <div class="flex items-center space-x-3 mb-6">
+                <span class="flex items-center justify-center w-9 h-9 rounded-xl bg-indigo-600 text-white font-bold shadow">4</span>
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-900">Materi Lengkap <span class="text-indigo-600 font-semibold">(Core Concepts &amp; Key Terms)</span></h2>
+                    <p class="text-sm text-slate-500">Penjelasan konsep mendalam beserta istilah kunci Cambridge yang wajib dikuasai</p>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <!-- Concept 1: FDP Equivalence & Converter -->
+                <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm">
+                    <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+                        <h3 class="text-xl font-bold text-slate-900">A. Fractions, Decimals, and Percentages (<span class="text-cambridge-600">FDP Equivalence</span>)</h3>
+                        <span class="px-3 py-1 bg-indigo-50 text-indigo-700 text-xs font-bold rounded-full">Key Concept 1</span>
+                    </div>
+                    <p class="text-slate-600 text-sm sm:text-base leading-relaxed mb-4">
+                        Kata <strong class="text-slate-900">"per cent"</strong> berasal dari bahasa Latin <em>per centum</em> yang berarti <strong class="text-cambridge-700">"out of 100"</strong> (per seratus). Oleh karena itu, setiap persentase dapat langsung ditulis sebagai pecahan dengan <strong class="text-slate-900">denominator</strong> (penyebut) 100.
+                    </p>
+
+                    <!-- Conversion Rules Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                            <div class="font-bold text-slate-900 text-sm mb-1"><i class="fa-solid fa-arrow-right text-cambridge-600 mr-1"></i> Percentage to Fraction</div>
+                            <p class="text-xs text-slate-600">Tulis per 100, lalu sederhanakan (<strong class="text-slate-800">simplify</strong>) dengan membagi <span class="italic">numerator</span> &amp; <span class="italic">denominator</span> dengan FPB-nya.</p>
+                            <div class="mt-2 text-xs font-mono bg-white p-2 rounded border border-slate-200">35% = 35/100 = <strong>7/20</strong></div>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                            <div class="font-bold text-slate-900 text-sm mb-1"><i class="fa-solid fa-arrow-right text-cambridge-600 mr-1"></i> Percentage to Decimal</div>
+                            <p class="text-xs text-slate-600">Bagi dengan 100 (<strong class="text-slate-800">divide by 100</strong>) atau geser titik desimal 2 langkah ke kiri.</p>
+                            <div class="mt-2 text-xs font-mono bg-white p-2 rounded border border-slate-200">45% = 45 &divide; 100 = <strong>0.45</strong></div>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                            <div class="font-bold text-slate-900 text-sm mb-1"><i class="fa-solid fa-arrow-right text-cambridge-600 mr-1"></i> Fraction to Percentage</div>
+                            <p class="text-xs text-slate-600">Ubah penyebut menjadi 100 (<strong class="text-slate-800">equivalent fraction</strong>) atau kalikan dengan 100%.</p>
+                            <div class="mt-2 text-xs font-mono bg-white p-2 rounded border border-slate-200">3/5 = 60/100 = <strong>60%</strong></div>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Live FDP Converter -->
+                    <div class="bg-gradient-to-r from-slate-900 to-slate-800 text-white p-5 rounded-2xl">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                            <div>
+                                <h4 class="font-bold text-sm text-amber-300 uppercase tracking-wider"><i class="fa-solid fa-wand-magic-sparkles mr-1"></i> Interactive FDP Converter</h4>
+                                <p class="text-xs text-slate-300 mt-0.5">Ketik angka persen apa saja (termasuk &lt;1% atau &gt;100%, misal: 0.5 atau 125)</p>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <input type="number" id="fdp-input" value="75" step="0.1" class="w-28 px-3 py-2 rounded-xl bg-white/10 border border-white/20 text-white font-bold text-right focus:outline-none focus:border-amber-400">
+                                <span class="font-bold text-lg text-amber-300">%</span>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-4 pt-4 border-t border-white/10 text-center">
+                            <div class="bg-white/5 p-3 rounded-xl">
+                                <span class="text-xs text-slate-400 block">Decimal Form</span>
+                                <span id="conv-dec" class="text-lg font-mono font-bold text-emerald-400">0.75</span>
+                            </div>
+                            <div class="bg-white/5 p-3 rounded-xl">
+                                <span class="text-xs text-slate-400 block">Fraction (Out of 100)</span>
+                                <span id="conv-frac-100" class="text-lg font-mono font-bold text-blue-300">75 / 100</span>
+                            </div>
+                            <div class="bg-white/5 p-3 rounded-xl">
+                                <span class="text-xs text-slate-400 block">Simplest / Mixed Fraction</span>
+                                <span id="conv-frac-simp" class="text-lg font-mono font-bold text-amber-300">3 / 4</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Concept 2: Special Percentages (<1% and >100%) -->
+                <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm">
+                    <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+                        <h3 class="text-xl font-bold text-slate-900">B. Special Percentages: <span class="text-emerald-600">&lt; 1% and &gt; 100%</span></h3>
+                        <span class="px-3 py-1 bg-emerald-50 text-emerald-700 text-xs font-bold rounded-full">Key Concept 2</span>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="border-l-4 border-emerald-500 pl-4">
+                            <h4 class="font-bold text-slate-900">1. Percentages Less Than 1% (&lt; 1%)</h4>
+                            <p class="text-sm text-slate-600 mt-1">
+                                Digunakan untuk menyatakan bagian yang sangat kecil (<strong class="text-slate-800">tiny proportions</strong>), seperti kadar mineral atau suku bunga.
+                            </p>
+                            <ul class="mt-2 text-sm text-slate-700 space-y-1 font-mono bg-slate-50 p-3 rounded-xl">
+                                <li>&bull; 0.5% = 0.5 &divide; 100 = <strong>0.005</strong> = 1/200</li>
+                                <li>&bull; 0.25% = 0.25 &divide; 100 = <strong>0.0025</strong> = 1/400</li>
+                            </ul>
+                        </div>
+                        <div class="border-l-4 border-amber-500 pl-4">
+                            <h4 class="font-bold text-slate-900">2. Percentages Greater Than 100% (&gt; 100%)</h4>
+                            <p class="text-sm text-slate-600 mt-1">
+                                Karena <strong class="text-slate-800">100% = 1 whole</strong> (1 keseluruhan), maka persen di atas 100% nilainya lebih dari 1 dan dapat ditulis sebagai <strong class="text-slate-800">mixed number</strong> (pecahan campuran).
+                            </p>
+                            <ul class="mt-2 text-sm text-slate-700 space-y-1 font-mono bg-slate-50 p-3 rounded-xl">
+                                <li>&bull; 150% = 1.5 = 150/100 = <strong>1 &frac12;</strong></li>
+                                <li>&bull; 220% = 2.2 = 220/100 = <strong>2 1/5</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Concept 3: Calculating Percentages of Quantities -->
+                <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm">
+                    <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+                        <h3 class="text-xl font-bold text-slate-900">C. Calculating Percentages of Quantities</h3>
+                        <span class="px-3 py-1 bg-purple-50 text-purple-700 text-xs font-bold rounded-full">Key Concept 3</span>
+                    </div>
+                    <p class="text-slate-600 text-sm sm:text-base mb-4">
+                        Dalam ujian Cambridge, siswa sering diminta mengerjakan soal baik <strong class="text-slate-900">Non-Calculator</strong> (tanpa kalkulator) maupun <strong class="text-slate-900">Calculator</strong>. Berikut dua strategi utamanya:
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-purple-50/60 border border-purple-200 p-5 rounded-2xl">
+                            <h4 class="font-bold text-purple-900 mb-2"><i class="fa-solid fa-brain mr-1"></i> Mental / Building Blocks Method (Tanpa Kalkulator)</h4>
+                            <p class="text-xs text-slate-600 mb-3">Gunakan persen patokan (<strong class="text-slate-800">benchmark percentages</strong>): 50% (&divide;2), 25% (&divide;4), 10% (&divide;10), dan 1% (&divide;100).</p>
+                            <div class="bg-white p-3.5 rounded-xl text-xs space-y-1.5 border border-purple-100">
+                                <p class="font-bold text-slate-800">Contoh: Find 35% of $240</p>
+                                <p>&bull; 10% of $240 = 240 &divide; 10 = <strong>$24</strong></p>
+                                <p>&bull; 30% of $240 = 3 &times; $24 = <strong>$72</strong></p>
+                                <p>&bull; 5% of $240 = half of 10% = <strong>$12</strong></p>
+                                <p class="text-purple-700 font-bold pt-1 border-t border-slate-100">&there4; 35% of $240 = $72 + $12 = $84</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-blue-50/60 border border-blue-200 p-5 rounded-2xl">
+                            <h4 class="font-bold text-cambridge-900 mb-2"><i class="fa-solid fa-percent mr-1"></i> Expressing One Quantity as a Percentage of Another</h4>
+                            <p class="text-xs text-slate-600 mb-3">Untuk menyatakan kuantitas A sebagai persen dari B (pastikan <strong class="text-slate-800">same units</strong> / satuan sama!):</p>
+                            <div class="bg-white p-3.5 rounded-xl text-xs space-y-2 border border-blue-100">
+                                <div class="font-mono font-bold text-center py-1.5 bg-slate-100 rounded-lg text-slate-800">
+                                    Percentage = (Part / Whole) &times; 100%
+                                </div>
+                                <p class="font-bold text-slate-800">Contoh: Write 40 cm as a percentage of 2 m.</p>
+                                <p>&bull; Samakan satuan: 2 m = <strong>200 cm</strong></p>
+                                <p class="text-cambridge-700 font-bold">&bull; (40 / 200) &times; 100% = (1/5) &times; 100% = 20%</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================================================================== -->
+        <!-- SECTION 5: WORKED EXAMPLES & PRACTICE (ALL IN ENGLISH) -->
+        <!-- ===================================================================== -->
+        <section id="practice" class="scroll-mt-24">
+            <div class="flex items-center space-x-3 mb-6">
+                <span class="flex items-center justify-center w-9 h-9 rounded-xl bg-rose-600 text-white font-bold shadow">5</span>
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-900">Cambridge Worked Examples &amp; Practice <span class="text-rose-600 font-semibold">(Full English)</span></h2>
+                    <p class="text-sm text-slate-500">Coba kerjakan terlebih dahulu, lalu klik tombol untuk melihat pembahasan langkah demi langkah</p>
+                </div>
+            </div>
+
+            <div class="space-y-5" id="worked-examples-container">
+                <!-- Worked examples injected via JS -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-8 mt-16 border-t border-slate-800">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm">
+            <div>
+                <span class="font-bold text-white">Cambridge Lower Secondary Mathematics</span> &bull; Stage 7 Module
+            </div>
+            <div>
+                Aligned with Cambridge Assessment International Education Curriculum Framework
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive Logic Script -->
+    <script>
+        // 1. Mobile Menu Toggle
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // 2. Warm-Up Questions Data (4 Questions in English)
+        const warmupQuestions = [
+            {
+                id: 1,
+                topic: "FDP Equivalence",
+                question: "Which of the following is equivalent to 0.08?",
+                options: ["80%", "8%", "0.8%", "8/10"],
+                correct: 1,
+                explanation: "To convert a decimal to a percentage, multiply by 100: 0.08 × 100 = 8%."
+            },
+            {
+                id: 2,
+                topic: "Percentage of a Quantity",
+                question: "Calculate 15% of 60 kg.",
+                options: ["6 kg", "9 kg", "12 kg", "15 kg"],
+                correct: 1,
+                explanation: "10% of 60 kg = 6 kg. 5% of 60 kg = 3 kg. Therefore, 15% = 6 + 3 = 9 kg."
+            },
+            {
+                id: 3,
+                topic: "Percentages > 100%",
+                question: "Write 140% as a mixed number in its simplest form.",
+                options: ["1 4/10", "1 2/5", "14/100", "2 2/5"],
+                correct: 1,
+                explanation: "140% = 140/100 = 1 and 40/100. Simplifying 40/100 by dividing by 20 gives 2/5. So, 1 2/5."
+            },
+            {
+                id: 4,
+                topic: "Comparing Quantities",
+                question: "In a test, Sarah scored 18 out of 20. What is her percentage score?",
+                options: ["80%", "85%", "90%", "95%"],
+                correct: 2,
+                explanation: "18/20 = (18 × 5) / (20 × 5) = 90/100 = 90%."
+            }
+        ];
+
+        let warmupScore = 0;
+        const answeredSet = new Set();
+
+        function renderWarmup() {
+            const container = document.getElementById('warmup-container');
+            container.innerHTML = warmupQuestions.map((q, qIndex) => `
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between" id="q-card-${qIndex}">
+                    <div>
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="px-2.5 py-1 bg-amber-50 text-amber-700 text-xs font-bold rounded-lg">Question ${q.id} &bull; ${q.topic}</span>
+                            <span id="q-status-${qIndex}" class="text-xs font-bold"></span>
+                        </div>
+                        <p class="font-bold text-slate-900 text-base mb-4">${q.question}</p>
+                        <div class="space-y-2.5">
+                            ${q.options.map((opt, optIndex) => `
+                                <button onclick="checkWarmupAnswer(${qIndex}, ${optIndex})" id="btn-${qIndex}-${optIndex}" 
+                                    class="w-full text-left px-4 py-2.5 rounded-xl border border-slate-200 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:border-cambridge-400 transition flex justify-between items-center">
+                                    <span>${String.fromCharCode(65 + optIndex)}. ${opt}</span>
+                                    <span class="icon-placeholder"></span>
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+                    <div id="exp-${qIndex}" class="hidden mt-4 p-3 rounded-xl text-xs leading-relaxed"></div>
+                </div>
+            `).join('');
+        }
+
+        function checkWarmupAnswer(qIndex, selectedIndex) {
+            if (answeredSet.has(qIndex)) return;
+            answeredSet.add(qIndex);
+
+            const q = warmupQuestions[qIndex];
+            const isCorrect = selectedIndex === q.correct;
+            const expBox = document.getElementById(`exp-${qIndex}`);
+            const statusBadge = document.getElementById(`q-status-${qIndex}`);
+
+            // Disable all buttons in this card and highlight correct/wrong
+            q.options.forEach((_, idx) => {
+                const btn = document.getElementById(`btn-${qIndex}-${idx}`);
+                btn.disabled = true;
+                btn.classList.remove('hover:bg-slate-50', 'hover:border-cambridge-400');
+
+                if (idx === q.correct) {
+                    btn.classList.add('bg-emerald-50', 'border-emerald-500', 'text-emerald-900', 'font-bold');
+                    btn.querySelector('.icon-placeholder').innerHTML = '<i class="fa-solid fa-circle-check text-emerald-600"></i>';
+                } else if (idx === selectedIndex && !isCorrect) {
+                    btn.classList.add('bg-rose-50', 'border-rose-500', 'text-rose-900');
+                    btn.querySelector('.icon-placeholder').innerHTML = '<i class="fa-solid fa-circle-xmark text-rose-600"></i>';
+                }
+            });
+
+            if (isCorrect) {
+                warmupScore++;
+                document.getElementById('warmup-score').textContent = warmupScore;
+                statusBadge.innerHTML = '<span class="text-emerald-600"><i class="fa-solid fa-check"></i> Correct</span>';
+                expBox.className = "mt-4 p-3 rounded-xl text-xs leading-relaxed bg-emerald-50 text-emerald-900 border border-emerald-200";
+            } else {
+                statusBadge.innerHTML = '<span class="text-rose-600"><i class="fa-solid fa-xmark"></i> Incorrect</span>';
+                expBox.className = "mt-4 p-3 rounded-xl text-xs leading-relaxed bg-rose-50 text-rose-900 border border-rose-200";
+            }
+
+            expBox.innerHTML = `<strong>Explanation:</strong> ${q.explanation}`;
+            expBox.classList.remove('hidden');
+        }
+
+        // 3. Real-World Applications Tabs
+        function switchAppTab(tabName) {
+            // Hide all contents
+            document.querySelectorAll('.app-tab-content').forEach(el => el.classList.add('hidden'));
+            // Reset all tab buttons
+            document.querySelectorAll('.app-tab-btn').forEach(btn => {
+                btn.classList.remove('text-cambridge-600', 'bg-white', 'border-b-2', 'border-cambridge-600');
+                btn.classList.add('text-slate-600');
+            });
+
+            // Show active content & style active button
+            document.getElementById(`content-${tabName}`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`tab-${tabName}`);
+            activeBtn.classList.remove('text-slate-600');
+            activeBtn.classList.add('text-cambridge-600', 'bg-white', 'border-b-2', 'border-cambridge-600');
+        }
+
+        // Financial Simulator Logic
+        const priceSlider = document.getElementById('sim-price-slider');
+        const pctSlider = document.getElementById('sim-pct-slider');
+
+        function updateFinancialSim() {
+            const orig = parseFloat(priceSlider.value);
+            const pct = parseFloat(pctSlider.value);
+            const diff = orig * (pct / 100);
+            const final = orig + diff;
+
+            document.getElementById('sim-orig-price').textContent = orig;
+            document.getElementById('sim-pct-val').textContent = (pct > 0 ? `+${pct}` : pct);
+            
+            const labelEl = document.getElementById('sim-label');
+            const diffEl = document.getElementById('sim-diff');
+
+            if (pct < 0) {
+                labelEl.textContent = "Discount Amount (Potongan)";
+                diffEl.textContent = `-$${Math.abs(diff).toFixed(2)}`;
+                diffEl.className = "text-base font-bold text-rose-600";
+            } else if (pct > 0) {
+                labelEl.textContent = "Price Increase / Tax (Kenaikan)";
+                diffEl.textContent = `+$${diff.toFixed(2)}`;
+                diffEl.className = "text-base font-bold text-amber-600";
+            } else {
+                labelEl.textContent = "No Change";
+                diffEl.textContent = "$0.00";
+                diffEl.className = "text-base font-bold text-slate-600";
+            }
+
+            document.getElementById('sim-final').textContent = `$${final.toFixed(2)}`;
+        }
+
+        priceSlider.addEventListener('input', updateFinancialSim);
+        pctSlider.addEventListener('input', updateFinancialSim);
+
+        // 10x10 Hundred Grid Interactive Logic
+        const gridContainer = document.getElementById('hundred-grid');
+        let gridCells = [];
+
+        function gcd(a, b) {
+            return b === 0 ? a : gcd(b, a % b);
+        }
+
+        function initHundredGrid() {
+            gridContainer.innerHTML = '';
+            gridCells = [];
+            for (let i = 0; i < 100; i++) {
+                const cell = document.createElement('button');
+                cell.className = 'w-full h-full rounded-sm border border-slate-300 bg-white transition-colors duration-150 focus:outline-none';
+                cell.dataset.shaded = i < 25 ? 'true' : 'false';
+                if (i < 25) {
+                    cell.classList.remove('bg-white');
+                    cell.classList.add('bg-cambridge-600', 'border-cambridge-700');
+                }
+                cell.addEventListener('click', () => {
+                    const isShaded = cell.dataset.shaded === 'true';
+                    cell.dataset.shaded = (!isShaded).toString();
+                    if (!isShaded) {
+                        cell.classList.remove('bg-white');
+                        cell.classList.add('bg-cambridge-600', 'border-cambridge-700');
+                    } else {
+                        cell.classList.remove('bg-cambridge-600', 'border-cambridge-700');
+                        cell.classList.add('bg-white');
+                    }
+                    updateGridStats();
+                });
+                gridContainer.appendChild(cell);
+                gridCells.push(cell);
+            }
+            updateGridStats();
+        }
+
+        function setGridPreset(count) {
+            gridCells.forEach((cell, idx) => {
+                if (idx < count) {
+                    cell.dataset.shaded = 'true';
+                    cell.classList.remove('bg-white');
+                    cell.classList.add('bg-cambridge-600', 'border-cambridge-700');
+                } else {
+                    cell.dataset.shaded = 'false';
+                    cell.classList.remove('bg-cambridge-600', 'border-cambridge-700');
+                    cell.classList.add('bg-white');
+                }
+            });
+            updateGridStats();
+        }
+
+        function updateGridStats() {
+            const shadedCount = gridCells.filter(c => c.dataset.shaded === 'true').length;
+            document.getElementById('grid-pct').textContent = `${shadedCount}%`;
+            document.getElementById('grid-dec').textContent = (shadedCount / 100).toFixed(2);
+
+            if (shadedCount === 0) {
+                document.getElementById('grid-frac').textContent = '0';
+            } else if (shadedCount === 100) {
+                document.getElementById('grid-frac').textContent = '1';
+            } else {
+                const divisor = gcd(shadedCount, 100);
+                document.getElementById('grid-frac').textContent = `${shadedCount / divisor}/${100 / divisor}`;
+            }
+        }
+
+        // 4. Interactive FDP Converter Logic
+        const fdpInput = document.getElementById('fdp-input');
+        function updateFDPConverter() {
+            let val = parseFloat(fdpInput.value);
+            if (isNaN(val)) val = 0;
+
+            const dec = val / 100;
+            document.getElementById('conv-dec').textContent = Number(dec.toFixed(6));
+            document.getElementById('conv-frac-100').textContent = `${val} / 100`;
+
+            // Handle decimals in percentage (e.g. 0.5% -> 5/1000)
+            let multiplier = 1;
+            const strVal = val.toString();
+            if (strVal.includes('.')) {
+                const decimals = strVal.split('.')[1].length;
+                multiplier = Math.pow(10, decimals);
+            }
+
+            const num = Math.round(val * multiplier);
+            const den = 100 * multiplier;
+
+            if (num === 0) {
+                document.getElementById('conv-frac-simp').textContent = '0';
+                return;
+            }
+
+            const common = gcd(Math.abs(num), den);
+            const simpNum = num / common;
+            const simpDen = den / common;
+
+            if (simpDen === 1) {
+                document.getElementById('conv-frac-simp').textContent = `${simpNum}`;
+            } else if (Math.abs(simpNum) > simpDen) {
+                const whole = Math.trunc(simpNum / simpDen);
+                const rem = Math.abs(simpNum % simpDen);
+                document.getElementById('conv-frac-simp').textContent = `${whole} ${rem}/${simpDen}`;
+            } else {
+                document.getElementById('conv-frac-simp').textContent = `${simpNum} / ${simpDen}`;
+            }
+        }
+        fdpInput.addEventListener('input', updateFDPConverter);
+
+        // 5. Worked Examples Data (All in English with Detailed Step-by-Step Solutions)
+        const workedExamples = [
+            {
+                number: 1,
+                category: "Special Percentages (<1% and >100%)",
+                difficulty: "Core",
+                problem: "Convert (a) 0.4% into a decimal and a fraction in its simplest form, and (b) 175% into a decimal and a mixed number.",
+                steps: [
+                    "<strong>Part (a) 0.4%:</strong><br>• <em>Decimal:</em> Divide 0.4 by 100 &rarr; 0.4 &divide; 100 = <strong>0.004</strong>.<br>• <em>Fraction:</em> Write 0.4 over 100 &rarr; 0.4/100. Multiply numerator and denominator by 10 to remove the decimal &rarr; 4/1000. Divide both by 4 &rarr; <strong>1/250</strong>.",
+                    "<strong>Part (b) 175%:</strong><br>• <em>Decimal:</em> Divide 175 by 100 &rarr; 175 &divide; 100 = <strong>1.75</strong>.<br>• <em>Mixed Number:</em> 175% = 175/100 = 1 and 75/100. Simplify 75/100 by dividing by 25 &rarr; <strong>1 3/4</strong>."
+                ]
+            },
+            {
+                number: 2,
+                category: "Percentage of a Quantity (Non-Calculator)",
+                difficulty: "Intermediate",
+                problem: "A jacket originally costs $80. During a winter sale, the price is reduced by 35%. Calculate (a) the discount amount, and (b) the new sale price of the jacket.",
+                steps: [
+                    "<strong>Step 1 (Find 10% and 5%):</strong><br>• 10% of $80 = $80 &divide; 10 = $8.<br>• 5% of $80 = half of $8 = $4.",
+                    "<strong>Step 2 (Calculate 35% discount):</strong><br>• 35% = (3 &times; 10%) + 5% = (3 &times; $8) + $4 = $24 + $4 = <strong>$28</strong> (Discount amount).",
+                    "<strong>Step 3 (Calculate new sale price):</strong><br>• Sale price = Original price &minus; Discount = $80 &minus; $28 = <strong>$52</strong>."
+                ]
+            },
+            {
+                number: 3,
+                category: "Expressing One Quantity as a Percentage",
+                difficulty: "Intermediate",
+                problem: "A water bottle holds 1.5 litres of water. Marcus drinks 450 ml of the water. What percentage of the water did Marcus drink?",
+                steps: [
+                    "<strong>Step 1 (Convert to the same units):</strong><br>• Since 1 litre = 1000 ml, 1.5 litres = 1.5 &times; 1000 = <strong>1500 ml</strong>.",
+                    "<strong>Step 2 (Write as a fraction):</strong><br>• Fraction drunk = 450 / 1500.",
+                    "<strong>Step 3 (Simplify and convert to percentage):</strong><br>• Divide numerator and denominator by 15: 450 &divide; 15 = 30, and 1500 &divide; 15 = 100.<br>• So, 30 / 100 = <strong>30%</strong>. Marcus drank 30% of the water."
+                ]
+            },
+            {
+                number: 4,
+                category: "Thinking & Working Mathematically (TWM - Convincing)",
+                difficulty: "Challenge",
+                problem: "Two shops sell the same pair of headphones. Shop A offers a 20% discount on an original price of $60. Shop B offers a 15% discount on an original price of $56. Which shop sells the headphones for a lower price? Show your working clearly to convince your answer.",
+                steps: [
+                    "<strong>Calculate Shop A's final price:</strong><br>• 10% of $60 = $6 &rarr; 20% of $60 = $12.<br>• Final price at Shop A = $60 &minus; $12 = <strong>$48.00</strong>.",
+                    "<strong>Calculate Shop B's final price:</strong><br>• 10% of $56 = $5.60.<br>• 5% of $56 = $5.60 &divide; 2 = $2.80.<br>• 15% discount = $5.60 + $2.80 = $8.40.<br>• Final price at Shop B = $56 &minus; $8.40 = <strong>$47.60</strong>.",
+                    "<strong>Conclusion:</strong><br>• <strong>Shop B</strong> sells the headphones for a lower price ($47.60 is $0.40 cheaper than Shop A's $48.00)."
+                ]
+            }
+        ];
+
+        function renderWorkedExamples() {
+            const container = document.getElementById('worked-examples-container');
+            container.innerHTML = workedExamples.map((ex, idx) => `
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                            <div class="flex items-center space-x-2">
+                                <span class="px-3 py-1 bg-slate-900 text-white text-xs font-bold rounded-lg">Example ${ex.number}</span>
+                                <span class="text-xs font-semibold text-cambridge-600">${ex.category}</span>
+                            </div>
+                            <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold ${ex.difficulty === 'Challenge' ? 'bg-rose-100 text-rose-700' : 'bg-slate-100 text-slate-600'}">
+                                ${ex.difficulty}
+                            </span>
+                        </div>
+                        <p class="text-slate-800 font-medium text-base leading-relaxed">${ex.problem}</p>
+                        
+                        <div class="mt-4">
+                            <button onclick="toggleSolution(${idx})" id="sol-btn-${idx}" 
+                                class="inline-flex items-center px-4 py-2 rounded-xl bg-cambridge-50 hover:bg-cambridge-100 text-cambridge-700 font-semibold text-sm transition">
+                                <i class="fa-solid fa-eye mr-2"></i> <span>Show Step-by-Step Solution</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="sol-box-${idx}" class="hidden bg-slate-50 border-t border-slate-200 p-6 space-y-3">
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-500">Detailed Working &amp; Solution:</h4>
+                        ${ex.steps.map(step => `
+                            <div class="p-3.5 bg-white rounded-xl border border-slate-200 text-sm text-slate-700 leading-relaxed">
+                                ${step}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function toggleSolution(idx) {
+            const box = document.getElementById(`sol-box-${idx}`);
+            const btn = document.getElementById(`sol-btn-${idx}`);
+            const isHidden = box.classList.contains('hidden');
+
+            if (isHidden) {
+                box.classList.remove('hidden');
+                btn.innerHTML = '<i class="fa-solid fa-eye-slash mr-2"></i> <span>Hide Solution</span>';
+                btn.classList.replace('bg-cambridge-50', 'bg-slate-200');
+                btn.classList.replace('text-cambridge-700', 'text-slate-800');
+            } else {
+                box.classList.add('hidden');
+                btn.innerHTML = '<i class="fa-solid fa-eye mr-2"></i> <span>Show Step-by-Step Solution</span>';
+                btn.classList.replace('bg-slate-200', 'bg-cambridge-50');
+                btn.classList.replace('text-slate-800', 'text-cambridge-700');
+            }
+        }
+
+        // Initialize all interactive components on load
+        window.addEventListener('DOMContentLoaded', () => {
+            renderWarmup();
+            initHundredGrid();
+            updateFinancialSim();
+            updateFDPConverter();
+            renderWorkedExamples();
+        });
+    </script>
+</body>
+</html>
